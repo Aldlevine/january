@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/362422__alphatrooper18__hit1.wav-b06501b0c62662b3d8b5df62d2357076.sample"
+
+[deps]
+
+source_file="res://sfx/362422__alphatrooper18__hit1.wav"
+dest_files=[ "res://.import/362422__alphatrooper18__hit1.wav-b06501b0c62662b3d8b5df62d2357076.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

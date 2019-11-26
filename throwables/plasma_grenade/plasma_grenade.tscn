@@ -1,0 +1,147 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://throwables/plasma_grenade/plasma_grenade.gd" type="Script" id=1]
+[ext_resource path="res://throwables/plasma_grenade/plasma_grenade_shadow.png" type="Texture" id=2]
+[ext_resource path="res://throwables/plasma_grenade/plasma_grenade.png" type="Texture" id=3]
+[ext_resource path="res://pickups/pickup.gd" type="Script" id=4]
+[ext_resource path="res://engine/attackbox.gd" type="Script" id=5]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 1
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 1, 0.5 )
+
+[sub_resource type="Animation" id=3]
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 72.0, 144.0, 216.0, 288.0, 360.0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 2, 2 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 2, 2 )
+
+[sub_resource type="Gradient" id=12]
+offsets = PoolRealArray( 0, 0.725352, 1 )
+colors = PoolColorArray( 0.078125, 0, 1, 1, 0.027451, 0.647059, 1, 1, 0, 0.976471, 1, 0 )
+
+[sub_resource type="GradientTexture" id=13]
+gradient = SubResource( 12 )
+
+[sub_resource type="Curve" id=6]
+min_value = -200.0
+max_value = 200.0
+_data = [ Vector2( 0, 134.2 ), 0.0, 1091.01, 0, 0, Vector2( 0.960547, -133.32 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 1 ), 0.0, 1.56034, 0, 0, Vector2( 0.960547, 0.434 ), -3.65435, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 128.0
+initial_velocity_random = 1.0
+angular_velocity = 90.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 64.0
+linear_accel_random = 1.0
+linear_accel_curve = SubResource( 7 )
+angle = 360.0
+angle_random = 1.0
+scale = 2.0
+scale_random = 1.0
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 13 )
+
+[sub_resource type="Environment" id=14]
+background_mode = 4
+glow_enabled = true
+glow_intensity = 8.0
+glow_strength = 0.47
+glow_bloom = 0.2
+
+[node name="plasma_grenade" type="KinematicBody2D"]
+modulate = Color( 0.45098, 0.470588, 1, 1 )
+material = SubResource( 1 )
+collision_layer = 2
+collision_mask = 6
+script = ExtResource( 1 )
+gravity = 4.9
+speed = 300
+
+[node name="shadow" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.376471 )
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+
+[node name="shape" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1.5 )
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+use_parent_material = true
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/default = SubResource( 3 )
+
+[node name="pickup" type="Area2D" parent="."]
+visible = false
+monitoring = false
+monitorable = false
+script = ExtResource( 4 )
+
+[node name="pickup_shape" type="CollisionShape2D" parent="pickup"]
+shape = SubResource( 4 )
+
+[node name="attackbox" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 5 )
+type = 1
+power = 0.5
+air = true
+knockspeed = 75
+knocktime = 0.1
+
+[node name="attackbox_shape" type="CollisionShape2D" parent="attackbox"]
+shape = SubResource( 5 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+use_parent_material = true
+emitting = false
+amount = 64
+lifetime = 0.4
+one_shot = true
+speed_scale = 0.8
+explosiveness = 1.0
+fract_delta = false
+process_material = SubResource( 10 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 14 )

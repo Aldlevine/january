@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://throwables/rock/rock.gd" type="Script" id=1]
+[ext_resource path="res://throwables/rock/rock_shadow.png" type="Texture" id=2]
+[ext_resource path="res://shaders/entity.shader" type="Shader" id=3]
+[ext_resource path="res://throwables/rock/rock.png" type="Texture" id=4]
+[ext_resource path="res://throwables/rock/rock_height.png" type="Texture" id=5]
+[ext_resource path="res://pickups/pickup.gd" type="Script" id=6]
+[ext_resource path="res://engine/attackbox.gd" type="Script" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1, 0.5 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 3 )
+shader_param/modulate = Color( 1, 1, 1, 1 )
+shader_param/sink_offset = 1.0
+shader_param/sink = 0.0
+shader_param/sink_scale = 16.0
+
+[sub_resource type="Animation" id=3]
+length = 0.25
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 72.0, 144.0, 216.0, 288.0, 360.0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 2, 2 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 2, 2 )
+
+[node name="rock" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 6
+script = ExtResource( 1 )
+gravity = 4.9
+speed = 300.0
+
+[node name="shadow" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.376471 )
+position = Vector2( 0, 1 )
+texture = ExtResource( 2 )
+
+[node name="shape" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1.5 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 2 )
+texture = ExtResource( 4 )
+normal_map = ExtResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/default = SubResource( 3 )
+
+[node name="pickup" type="Area2D" parent="."]
+editor/display_folded = true
+monitoring = false
+monitorable = false
+script = ExtResource( 6 )
+
+[node name="pickup_shape" type="CollisionShape2D" parent="pickup"]
+shape = SubResource( 4 )
+
+[node name="attackbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 7 )
+type = 1
+power = 0.5
+air = true
+knockspeed = 75
+knocktime = 0.1
+
+[node name="attackbox_shape" type="CollisionShape2D" parent="attackbox"]
+shape = SubResource( 5 )

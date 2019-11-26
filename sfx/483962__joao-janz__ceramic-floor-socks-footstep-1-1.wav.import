@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/483962__joao-janz__ceramic-floor-socks-footstep-1-1.wav-ec0387055c0a34e2a969e25043747001.sample"
+
+[deps]
+
+source_file="res://sfx/483962__joao-janz__ceramic-floor-socks-footstep-1-1.wav"
+dest_files=[ "res://.import/483962__joao-janz__ceramic-floor-socks-footstep-1-1.wav-ec0387055c0a34e2a969e25043747001.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
