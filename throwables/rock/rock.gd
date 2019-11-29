@@ -83,6 +83,8 @@ func _handle_pickup(entity):
     entity.num_rocks += 1
     queue_free()
 
-func _attack_landed(_hitbox):
-  recoil()
+func _attack_landed(hitbox):
+  if hitbox.entity:
+    hitbox.entity.knockback(movedir, $attackbox.knockspeed, $attackbox.knocktime)
   $attackbox.monitorable = false
+  recoil()

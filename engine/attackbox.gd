@@ -26,8 +26,8 @@ func _ready():
   entity.attackboxes.append(self)
 
 func handle_hit(hitbox):
-  emit_signal("attack_landed", hitbox)
   attack_landed(hitbox)
+  emit_signal("attack_landed", hitbox)
 
 func attack_landed(hitbox):
   if hitbox.entity:
