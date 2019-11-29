@@ -464,6 +464,7 @@ attenuation = 2.0
 bus = "SFX"
 
 [node name="shape" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, -1 )
 shape = SubResource( 6 )
 
@@ -499,6 +500,8 @@ rotation = 1.5708
 shape = SubResource( 8 )
 
 [node name="hitbox" type="Area2D" parent="."]
+editor/display_folded = true
+visible = false
 collision_layer = 255
 collision_mask = 255
 script = ExtResource( 15 )
@@ -512,6 +515,7 @@ position = Vector2( 5, -4 )
 shape = SubResource( 9 )
 
 [node name="hitbox_air" type="Area2D" parent="."]
+editor/display_folded = true
 visible = false
 position = Vector2( 0, 2 )
 monitoring = false

@@ -1593,6 +1593,7 @@ texture = ExtResource( 3 )
 offset = Vector2( 0, -7 )
 
 [node name="fx_bg" type="Node2D" parent="."]
+editor/display_folded = true
 visible = false
 
 [node name="opti_meds" type="Sprite" parent="fx_bg"]
