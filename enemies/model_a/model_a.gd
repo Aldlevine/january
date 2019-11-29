@@ -130,6 +130,7 @@ func handle_death(attack, hitbox):
   .handle_death(attack, hitbox)
 
 func handle_vertical_offset(offset):
+  .handle_vertical_offset(offset)
   $Sprite.position.y = -offset
   # $fx_bg.position.y = -offset
   # $fx_fg.position.y = -offset

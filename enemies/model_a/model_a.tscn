@@ -400,16 +400,17 @@ radius = 12.0
 height = 26.0
 
 [sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 3, 4 )
+extents = Vector2( 3, 6 )
 
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 7, 8 )
 
 [node name="model_a" type="KinematicBody2D"]
+collision_layer = 255
+collision_mask = 261375
 script = ExtResource( 1 )
 team = 3
 max_health = 3
-speed = 75
 drop_chance = 0.5
 drops = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]
 aggro_color = Color( 1, 0.501961, 0.501961, 1 )
@@ -470,6 +471,8 @@ shape = SubResource( 6 )
 editor/display_folded = true
 visible = false
 position = Vector2( 0, 2 )
+collision_layer = 255
+collision_mask = 255
 script = ExtResource( 14 )
 type = 1
 
@@ -482,6 +485,8 @@ editor/display_folded = true
 visible = false
 monitoring = false
 monitorable = false
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 14 )
 type = 8
 power = 2.0
@@ -494,7 +499,8 @@ rotation = 1.5708
 shape = SubResource( 8 )
 
 [node name="hitbox" type="Area2D" parent="."]
-position = Vector2( 0, 2 )
+collision_layer = 255
+collision_mask = 255
 script = ExtResource( 15 )
 
 [node name="hitbox_ground_shape" type="CollisionShape2D" parent="hitbox"]
@@ -506,10 +512,12 @@ position = Vector2( 5, -4 )
 shape = SubResource( 9 )
 
 [node name="hitbox_air" type="Area2D" parent="."]
-editor/display_folded = true
+visible = false
 position = Vector2( 0, 2 )
-collision_layer = 2
-collision_mask = 2
+monitoring = false
+monitorable = false
+collision_layer = 255
+collision_mask = 255
 script = ExtResource( 15 )
 air = true
 

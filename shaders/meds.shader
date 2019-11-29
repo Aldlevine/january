@@ -87,6 +87,8 @@ void fragment() {
     COLOR = vec4(0.0, 0.0, 0.0, 0.0);
   }
   else {
-    COLOR = vec4(1.0);
+    COLOR = vec4(vec3(1.0), everything);
   }
+  
+//  COLOR = vec4(everything);
 }

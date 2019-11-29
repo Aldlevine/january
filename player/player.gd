@@ -94,7 +94,7 @@ func move_controls_loop():
     movedir = inputdir
   # elif inputdir.length_squared() > 0:
   #   facedir = 
-  if Input.is_action_just_pressed("ui_select") && vertical_pos == 0:
+  if Input.is_action_just_pressed("player_jump") && vertical_pos == 0:
     vertical_velocity = 1.5
 
 func attack_controls_loop():
@@ -243,6 +243,7 @@ func emit_show_thrown_item():
 ### HANDLERS
 
 func handle_vertical_offset(offset):
+  .handle_vertical_offset(offset)
   $Sprite.position.y = -offset
   $fx_bg.position.y = -offset
   $fx_fg.position.y = -offset

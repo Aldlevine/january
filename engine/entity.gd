@@ -30,6 +30,9 @@ onready var water_depth := get_tree().get_root().find_node("water_depth", true, 
 var sink := 0.0 setget set_sink
 
 var hitboxes := []
+var attackboxes := []
+onready var base_layer = collision_layer
+onready var base_mask = collision_mask
 
 var knockdir := Vector2()
 var knockspeed := 0
@@ -186,15 +189,11 @@ func instance_scene(scene, pos = global_position):
 ### HANDLERS
 
 func handle_vertical_offset(offset):
-  pass
-  # $Sprite.position.y = -offset
-  # $fx_bg.position.y = -offset
-  # $fx_fg.position.y = -offset
-  
-  # $shadow.scale = Vector2(1, 1) * (1 - max(offset, 0) / 32)
-  # $water_line.self_modulate.a = lerp(0.0, 1.0, min(-offset / 6.0, 1.0))
-  # $shadow.self_modulate.a = lerp(1.0, 0.0, max(min(-offset / 6.0, 1.0), 0.0))
-  # $Sprite.material.set_shader_param("sink", -offset if offset < 0 else 0)
+  layer_shifter.shift_layer(self, vertical_pos)
+  for box in hitboxes:
+    layer_shifter.shift_layer(box, vertical_pos)
+  for box in attackboxes:
+    layer_shifter.shift_layer(box, vertical_pos)
 
 func handle_attack(attack, hitbox = null):
   if hitbox == null:

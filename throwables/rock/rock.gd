@@ -67,23 +67,16 @@ func recoil():
   # max_speed *= 0.25
 
 func handle_vertical_offset(offset):
+  .handle_vertical_offset(offset)
   $Sprite.position.y = -offset
-  $attackbox.position.y = -offset
+  # $attackbox.position.y = -offset
   $shadow.self_modulate.a = lerp(1.0, 0.0, max(min(-offset / 6.0, 1.0), 0.0))
   $Sprite.material.set_shader_param("sink", -offset if offset < 0 else 0)
 
   if vertical_pos > 0:
     $attackbox.air = true
-    $attackbox.set_collision_layer_bit(0, false)
-    $attackbox.set_collision_mask_bit(0, false)
-    set_collision_layer_bit(1, true)
-    set_collision_mask_bit(1, true)
   else:
     $attackbox.air = false
-    $attackbox.set_collision_layer_bit(0, true)
-    $attackbox.set_collision_mask_bit(0, true)
-    set_collision_layer_bit(1, false)
-    set_collision_mask_bit(1, false)
 
 func _handle_pickup(entity):
   if entity.is_player():
