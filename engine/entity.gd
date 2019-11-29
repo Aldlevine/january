@@ -224,7 +224,7 @@ func attack_landed(_attack, _hitbox):
   pass
 
 func play_hit_fx(_attack, _hitbox):
-  if $audio/hit:
+  if has_node("audio/hit"):
     $audio/hit.play()
 
 func handle_death(_attack, _hitbox):
