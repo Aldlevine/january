@@ -9,7 +9,7 @@ func _ready():
     var autotile_coord = get_cell_autotile_coord(cell.x, cell.y);
     var texture = tile_set.tile_get_texture(id);
     var material = tile_set.tile_get_material(id).duplicate();
-    var region = tile_set.tile_get_region(id);
+    # var region = tile_set.tile_get_region(id);
     var subtile_size = tile_set.autotile_get_size(id);
     var sprite := Sprite.new();
     sprite.texture = texture;

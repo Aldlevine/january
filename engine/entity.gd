@@ -14,7 +14,7 @@ enum Team {
 
 export(Team) var team := Team.None
 
-export var max_health := 1
+export var max_health := 1.0
 onready var health: float = max_health
 
 export var vertical_pos := 0.0 setget set_vertical_pos
@@ -53,9 +53,6 @@ onready var anim = $AnimationPlayer
 func get_speed():
   return speed
 
-# func set_vertical_pos(pos):
-#   vertical_pos = pos
-
 func set_vertical_pos(pos):
   vertical_pos = pos
   handle_vertical_offset(pos - sink)
@@ -81,9 +78,9 @@ func set_facedir(dir):
 
 ### INITIALIZERS
 
-func _ready():
-  if health > max_health:
-    health = max_health
+# func _ready():
+  # if health > max_health:
+  #   health = max_health
   # states["default"] = funcref(self, "state_default")
 
 ### LOOPS
@@ -118,7 +115,7 @@ func movement_loop(round_position = true):
 
   var old_velocity = velocity
   velocity = move_and_slide(motion)
-  if round_position && velocity.normalized() != old_velocity.normalized():
+  if round_position && (velocity == Vector2() || velocity.normalized() != old_velocity.normalized()):
     global_position = global_position.round()
 
 func facing_loop():
@@ -161,8 +158,8 @@ func gravity_loop(delta):
 func is_player():
   return false
 
-func has_state(state):
-  return has_method(str("state_", state))
+func has_state(st):
+  return has_method(str("state_", st))
 
 func switch_anim(animation, sync_with_current = false, unfaced = false):
   var facing = "" if unfaced else directions.v2s(facedir)
@@ -188,7 +185,7 @@ func instance_scene(scene, pos = global_position):
 
 ### HANDLERS
 
-func handle_vertical_offset(offset):
+func handle_vertical_offset(_offset):
   layer_shifter.shift_layer(self, vertical_pos)
   for box in hitboxes:
     layer_shifter.shift_layer(box, vertical_pos)
@@ -200,8 +197,13 @@ func handle_attack(attack, hitbox = null):
     if hitboxes.size() == 0:
       return
     hitbox = hitboxes[0]
+
   if !check_attack(attack, hitbox):
     return
+
+  if attack.has_method("check_attack") && !attack.check_attack(hitbox):
+    return
+
   health -= compute_damage(attack, hitbox)
   attack.handle_hit(hitbox)
   attack_landed(attack, hitbox)

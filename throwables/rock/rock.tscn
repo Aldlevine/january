@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://throwables/rock/rock.gd" type="Script" id=1]
 [ext_resource path="res://throwables/rock/rock_shadow.png" type="Texture" id=2]
@@ -8,22 +8,25 @@
 [ext_resource path="res://pickups/pickup.gd" type="Script" id=6]
 [ext_resource path="res://engine/attackbox.gd" type="Script" id=7]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 2
+
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1, 0.5 )
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 3 )
 shader_param/modulate = Color( 1, 1, 1, 1 )
 shader_param/sink_offset = 1.0
 shader_param/sink = 0.0
 shader_param/sink_scale = 16.0
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.25
 loop = true
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/path = NodePath("bbc_sprite/sprite:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -35,10 +38,10 @@ tracks/0/keys = {
 "values": [ 0.0, 72.0, 144.0, 216.0, 288.0, 360.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 2, 2 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 2, 2 )
 
 [node name="rock" type="KinematicBody2D"]
@@ -49,31 +52,33 @@ gravity = 4.9
 speed = 300.0
 
 [node name="shadow" type="Sprite" parent="."]
-visible = false
-modulate = Color( 1, 1, 1, 0.376471 )
+modulate = Color( 0.133333, 0.133333, 0.180392, 1 )
+material = SubResource( 1 )
 position = Vector2( 0, 1 )
 texture = ExtResource( 2 )
 
 [node name="shape" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1.5 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
-material = SubResource( 2 )
+[node name="bbc_sprite" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="sprite" type="Sprite" parent="bbc_sprite"]
+material = SubResource( 3 )
 texture = ExtResource( 4 )
 normal_map = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/default = SubResource( 3 )
+anims/default = SubResource( 4 )
 
 [node name="pickup" type="Area2D" parent="."]
-editor/display_folded = true
 monitoring = false
 monitorable = false
 script = ExtResource( 6 )
 
 [node name="pickup_shape" type="CollisionShape2D" parent="pickup"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="attackbox" type="Area2D" parent="."]
 script = ExtResource( 7 )
@@ -84,4 +89,4 @@ knockspeed = 75
 knocktime = 0.1
 
 [node name="attackbox_shape" type="CollisionShape2D" parent="attackbox"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )

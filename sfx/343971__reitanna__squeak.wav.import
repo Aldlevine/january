@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/343971__reitanna__squeak.wav-3eea43629a6f5afe23c291480b9f3a2f.sample"
+
+[deps]
+
+source_file="res://sfx/343971__reitanna__squeak.wav"
+dest_files=[ "res://.import/343971__reitanna__squeak.wav-3eea43629a6f5afe23c291480b9f3a2f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

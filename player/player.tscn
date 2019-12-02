@@ -1,13 +1,13 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/player_shadow.png" type="Texture" id=2]
-[ext_resource path="res://player/player_water_line.png" type="Texture" id=3]
-[ext_resource path="res://shaders/meds.shader" type="Shader" id=4]
-[ext_resource path="res://throwables/rock/rock.png" type="Texture" id=5]
-[ext_resource path="res://shaders/entity.material" type="Material" id=6]
-[ext_resource path="res://player/january.png" type="Texture" id=7]
-[ext_resource path="res://player/january_throw_height.png" type="Texture" id=8]
+[ext_resource path="res://shaders/meds.shader" type="Shader" id=3]
+[ext_resource path="res://throwables/rock/rock.png" type="Texture" id=4]
+[ext_resource path="res://shaders/entity.shader" type="Shader" id=5]
+[ext_resource path="res://player/january.png" type="Texture" id=6]
+[ext_resource path="res://player/january_throw_height.png" type="Texture" id=7]
+[ext_resource path="res://player/player_water_line.png" type="Texture" id=8]
 [ext_resource path="res://player/january_height.png" type="Texture" id=9]
 [ext_resource path="res://player/january_knife.png" type="Texture" id=10]
 [ext_resource path="res://sfx/knife.wav" type="AudioStream" id=11]
@@ -20,46 +20,57 @@
 [ext_resource path="res://player/attackbox_knife.gd" type="Script" id=18]
 
 [sub_resource type="CanvasItemMaterial" id=1]
-blend_mode = 1
+blend_mode = 2
 
 [sub_resource type="ShaderMaterial" id=2]
-shader = ExtResource( 4 )
+shader = ExtResource( 3 )
 shader_param/octaves = 8
 shader_param/threshold = 0.3
 shader_param/time_offset = 0.0
 
 [sub_resource type="ShaderMaterial" id=3]
-shader = ExtResource( 4 )
+shader = ExtResource( 3 )
 shader_param/octaves = 8
 shader_param/threshold = 0.3
 shader_param/time_offset = 1.0
 
 [sub_resource type="ShaderMaterial" id=4]
-shader = ExtResource( 4 )
+shader = ExtResource( 5 )
+shader_param/modulate = Color( 1, 1, 1, 1 )
+shader_param/sink_offset = 0.0
+shader_param/sink = 0.0
+shader_param/sink_scale = 16.0
+
+[sub_resource type="CanvasItemMaterial" id=5]
+render_priority = 1
+blend_mode = 1
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 3 )
 shader_param/octaves = 8
 shader_param/threshold = 0.4
 shader_param/time_offset = 0.5
 
-[sub_resource type="ShaderMaterial" id=5]
-shader = ExtResource( 4 )
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 3 )
 shader_param/octaves = 8
 shader_param/threshold = 0.4
 shader_param/time_offset = 1.5
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=8]
 max_value = 10.0
 _data = [ Vector2( 0, 0 ), 0.0, 10.0, 0, 1, Vector2( 1, 10 ), 14.6253, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=7]
-curve = SubResource( 6 )
-
-[sub_resource type="Curve" id=8]
-_data = [ Vector2( 0, 1 ), 0.0, -0.649328, 0, 0, Vector2( 1, 0 ), -2.50261, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=9]
 curve = SubResource( 8 )
 
-[sub_resource type="ParticlesMaterial" id=10]
+[sub_resource type="Curve" id=10]
+_data = [ Vector2( 0, 1 ), 0.0, -0.649328, 0, 0, Vector2( 1, 0 ), -2.50261, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
 flag_disable_z = true
 spread = 30.0
 gravity = Vector3( 0, 49, 0 )
@@ -67,15 +78,127 @@ initial_velocity = 24.0
 angular_velocity = 128.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-damping_curve = SubResource( 7 )
+damping_curve = SubResource( 9 )
 scale = 2.0
 scale_random = 1.0
-scale_curve = SubResource( 9 )
+scale_curve = SubResource( 11 )
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=13]
+resource_name = "gun_e"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("attackbox_gun:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -90.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("attackbox_gun:monitorable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "gun_n"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("attackbox_gun:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 180.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("attackbox_gun:monitorable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "gun_s"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("attackbox_gun:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("attackbox_gun:monitorable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "gun_w"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("attackbox_gun:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 90.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("attackbox_gun:monitorable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[sub_resource type="Animation" id=17]
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("bbc_sprite/sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -87,7 +210,7 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:texture")
+tracks/1/path = NodePath("bbc_sprite/sprite:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -96,10 +219,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 7 ) ]
+"values": [ ExtResource( 6 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:normal_map")
+tracks/2/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -111,7 +234,7 @@ tracks/2/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:vframes")
+tracks/3/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -123,7 +246,7 @@ tracks/3/keys = {
 "values": [ 5 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite:hframes")
+tracks/4/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -135,10 +258,10 @@ tracks/4/keys = {
 "values": [ 6 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=18]
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("bbc_sprite/sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -150,7 +273,7 @@ tracks/0/keys = {
 "values": [ 2 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:texture")
+tracks/1/path = NodePath("bbc_sprite/sprite:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -159,10 +282,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 7 ) ]
+"values": [ ExtResource( 6 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:normal_map")
+tracks/2/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -174,7 +297,7 @@ tracks/2/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:vframes")
+tracks/3/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -186,7 +309,7 @@ tracks/3/keys = {
 "values": [ 5 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite:hframes")
+tracks/4/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -198,10 +321,10 @@ tracks/4/keys = {
 "values": [ 6 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=19]
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("bbc_sprite/sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -213,7 +336,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:texture")
+tracks/1/path = NodePath("bbc_sprite/sprite:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -222,10 +345,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 7 ) ]
+"values": [ ExtResource( 6 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:normal_map")
+tracks/2/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -237,7 +360,7 @@ tracks/2/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:vframes")
+tracks/3/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -249,7 +372,7 @@ tracks/3/keys = {
 "values": [ 5 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite:hframes")
+tracks/4/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -261,10 +384,10 @@ tracks/4/keys = {
 "values": [ 6 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=20]
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("bbc_sprite/sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -276,7 +399,7 @@ tracks/0/keys = {
 "values": [ 3 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:texture")
+tracks/1/path = NodePath("bbc_sprite/sprite:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -285,10 +408,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 7 ) ]
+"values": [ ExtResource( 6 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:normal_map")
+tracks/2/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -300,7 +423,7 @@ tracks/2/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:vframes")
+tracks/3/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -312,7 +435,7 @@ tracks/3/keys = {
 "values": [ 5 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite:hframes")
+tracks/4/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -324,10 +447,10 @@ tracks/4/keys = {
 "values": [ 6 ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=21]
 length = 0.4
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("bbc_sprite/sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -339,7 +462,7 @@ tracks/0/keys = {
 "values": [ 6, 7, 8, 9 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:vframes")
+tracks/1/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -351,7 +474,7 @@ tracks/1/keys = {
 "values": [ 4 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -363,7 +486,7 @@ tracks/2/keys = {
 "values": [ 5 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:texture")
+tracks/3/path = NodePath("bbc_sprite/sprite:texture")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -437,7 +560,7 @@ tracks/8/keys = {
 "values": [ false, true, false ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Sprite:normal_map")
+tracks/9/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -449,10 +572,10 @@ tracks/9/keys = {
 "values": [ ExtResource( 12 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=22]
 length = 0.4
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("bbc_sprite/sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -464,7 +587,7 @@ tracks/0/keys = {
 "values": [ 11, 12, 13, 14 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:vframes")
+tracks/1/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -476,7 +599,7 @@ tracks/1/keys = {
 "values": [ 4 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -488,7 +611,7 @@ tracks/2/keys = {
 "values": [ 5 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:texture")
+tracks/3/path = NodePath("bbc_sprite/sprite:texture")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -562,7 +685,7 @@ tracks/8/keys = {
 "values": [ false, true, false ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Sprite:normal_map")
+tracks/9/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -574,10 +697,10 @@ tracks/9/keys = {
 "values": [ ExtResource( 12 ) ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=23]
 length = 0.4
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("bbc_sprite/sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -589,7 +712,7 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 4 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:vframes")
+tracks/1/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -601,7 +724,7 @@ tracks/1/keys = {
 "values": [ 4 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -613,7 +736,7 @@ tracks/2/keys = {
 "values": [ 5 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:texture")
+tracks/3/path = NodePath("bbc_sprite/sprite:texture")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -687,7 +810,7 @@ tracks/8/keys = {
 "values": [ false, true, false ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Sprite:normal_map")
+tracks/9/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -699,10 +822,10 @@ tracks/9/keys = {
 "values": [ ExtResource( 12 ) ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=24]
 length = 0.4
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("bbc_sprite/sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -714,7 +837,7 @@ tracks/0/keys = {
 "values": [ 16, 17, 18, 19 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:vframes")
+tracks/1/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -726,7 +849,7 @@ tracks/1/keys = {
 "values": [ 4 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -738,7 +861,7 @@ tracks/2/keys = {
 "values": [ 5 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:texture")
+tracks/3/path = NodePath("bbc_sprite/sprite:texture")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -812,7 +935,7 @@ tracks/8/keys = {
 "values": [ false, true, false ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Sprite:normal_map")
+tracks/9/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -824,10 +947,10 @@ tracks/9/keys = {
 "values": [ ExtResource( 12 ) ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=25]
 length = 0.6
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("bbc_sprite/sprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -839,7 +962,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 13 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:vframes")
+tracks/1/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -851,7 +974,7 @@ tracks/1/keys = {
 "values": [ 4 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -863,7 +986,7 @@ tracks/2/keys = {
 "values": [ 6 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:frame")
+tracks/3/path = NodePath("bbc_sprite/sprite:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -904,7 +1027,7 @@ tracks/5/keys = {
 } ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite:normal_map")
+tracks/6/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -913,13 +1036,13 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 8 ) ]
+"values": [ ExtResource( 7 ) ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=26]
 length = 0.6
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("bbc_sprite/sprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -931,7 +1054,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 13 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:vframes")
+tracks/1/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -943,7 +1066,7 @@ tracks/1/keys = {
 "values": [ 4 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -955,7 +1078,7 @@ tracks/2/keys = {
 "values": [ 6 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:frame")
+tracks/3/path = NodePath("bbc_sprite/sprite:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -996,7 +1119,7 @@ tracks/5/keys = {
 } ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite:normal_map")
+tracks/6/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1005,13 +1128,13 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 8 ) ]
+"values": [ ExtResource( 7 ) ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=27]
 length = 0.6
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("bbc_sprite/sprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1023,7 +1146,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 13 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:vframes")
+tracks/1/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1035,7 +1158,7 @@ tracks/1/keys = {
 "values": [ 4 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1047,7 +1170,7 @@ tracks/2/keys = {
 "values": [ 6 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:frame")
+tracks/3/path = NodePath("bbc_sprite/sprite:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1088,7 +1211,7 @@ tracks/5/keys = {
 } ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite:normal_map")
+tracks/6/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1097,13 +1220,13 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 8 ) ]
+"values": [ ExtResource( 7 ) ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=28]
 length = 0.6
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("bbc_sprite/sprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1115,7 +1238,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 13 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:vframes")
+tracks/1/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1127,7 +1250,7 @@ tracks/1/keys = {
 "values": [ 4 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1139,7 +1262,7 @@ tracks/2/keys = {
 "values": [ 6 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:frame")
+tracks/3/path = NodePath("bbc_sprite/sprite:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1180,7 +1303,7 @@ tracks/5/keys = {
 } ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite:normal_map")
+tracks/6/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1189,14 +1312,14 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 8 ) ]
+"values": [ ExtResource( 7 ) ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=29]
 length = 0.6
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:hframes")
+tracks/0/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1208,7 +1331,7 @@ tracks/0/keys = {
 "values": [ 6 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:texture")
+tracks/1/path = NodePath("bbc_sprite/sprite:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1217,10 +1340,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 7 ) ]
+"values": [ ExtResource( 6 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:normal_map")
+tracks/2/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1232,7 +1355,7 @@ tracks/2/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:vframes")
+tracks/3/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1272,7 +1395,7 @@ tracks/5/keys = {
 } ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite:frame")
+tracks/6/path = NodePath("bbc_sprite/sprite:frame")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1284,11 +1407,11 @@ tracks/6/keys = {
 "values": [ 13, 14, 15, 16, 17, 12 ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=30]
 length = 0.6
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("bbc_sprite/sprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1297,10 +1420,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 7 ) ]
+"values": [ ExtResource( 6 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:normal_map")
+tracks/1/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1312,7 +1435,7 @@ tracks/1/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:vframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1324,7 +1447,7 @@ tracks/2/keys = {
 "values": [ 5 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:hframes")
+tracks/3/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1364,7 +1487,7 @@ tracks/5/keys = {
 } ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite:frame")
+tracks/6/path = NodePath("bbc_sprite/sprite:frame")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1376,11 +1499,11 @@ tracks/6/keys = {
 "values": [ 19, 20, 21, 22, 23, 18 ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=31]
 length = 0.6
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("bbc_sprite/sprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1389,10 +1512,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 7 ) ]
+"values": [ ExtResource( 6 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:normal_map")
+tracks/1/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1404,7 +1527,7 @@ tracks/1/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:vframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1416,7 +1539,7 @@ tracks/2/keys = {
 "values": [ 5 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:hframes")
+tracks/3/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1456,7 +1579,7 @@ tracks/5/keys = {
 } ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite:frame")
+tracks/6/path = NodePath("bbc_sprite/sprite:frame")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1468,11 +1591,11 @@ tracks/6/keys = {
 "values": [ 7, 8, 9, 10, 11, 6 ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=32]
 length = 0.6
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("bbc_sprite/sprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1481,10 +1604,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 7 ) ]
+"values": [ ExtResource( 6 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:normal_map")
+tracks/1/path = NodePath("bbc_sprite/sprite:normal_map")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1496,7 +1619,7 @@ tracks/1/keys = {
 "values": [ ExtResource( 9 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:vframes")
+tracks/2/path = NodePath("bbc_sprite/sprite:vframes")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1508,7 +1631,7 @@ tracks/2/keys = {
 "values": [ 5 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:hframes")
+tracks/3/path = NodePath("bbc_sprite/sprite:hframes")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1548,7 +1671,7 @@ tracks/5/keys = {
 } ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite:frame")
+tracks/6/path = NodePath("bbc_sprite/sprite:frame")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1560,18 +1683,21 @@ tracks/6/keys = {
 "values": [ 25, 26, 27, 28, 29, 24 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=27]
+[sub_resource type="CapsuleShape2D" id=33]
 radius = 1.0
 height = 6.0
 
-[sub_resource type="RectangleShape2D" id=28]
+[sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 3, 3 )
 
-[sub_resource type="RectangleShape2D" id=29]
+[sub_resource type="RectangleShape2D" id=35]
 extents = Vector2( 3, 3 )
 
-[sub_resource type="RectangleShape2D" id=30]
+[sub_resource type="RectangleShape2D" id=36]
 extents = Vector2( 6, 7.5 )
+
+[sub_resource type="RayShape2D" id=37]
+length = 180.0
 
 [node name="player" type="KinematicBody2D"]
 position = Vector2( 0, 1 )
@@ -1579,21 +1705,15 @@ collision_layer = 15
 collision_mask = 15375
 script = ExtResource( 1 )
 team = 1
-max_health = 3
+max_health = 3.0
 
 [node name="shadow" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.376471 )
+modulate = Color( 0.133333, 0.133333, 0.180392, 1 )
+material = SubResource( 1 )
 texture = ExtResource( 2 )
 offset = Vector2( 0, -7 )
 
-[node name="water_line" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.313726 )
-material = SubResource( 1 )
-texture = ExtResource( 3 )
-offset = Vector2( 0, -7 )
-
 [node name="fx_bg" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 
 [node name="opti_meds" type="Sprite" parent="fx_bg"]
@@ -1601,7 +1721,7 @@ modulate = Color( 0.00784314, 1, 0, 1 )
 material = SubResource( 2 )
 position = Vector2( 0, -15 )
 scale = Vector2( 5, 8 )
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="pain_meds" type="Sprite" parent="fx_bg"]
@@ -1609,35 +1729,45 @@ modulate = Color( 0.968627, 0, 0.886275, 1 )
 material = SubResource( 3 )
 position = Vector2( 0, -15 )
 scale = Vector2( 5, 8 )
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 region_rect = Rect2( 0, 0, 16, 16 )
 
-[node name="Sprite" type="Sprite" parent="."]
-material = ExtResource( 6 )
-texture = ExtResource( 7 )
-normal_map = ExtResource( 8 )
+[node name="bbc_sprite" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="sprite" type="Sprite" parent="bbc_sprite"]
+material = SubResource( 4 )
+texture = ExtResource( 10 )
+normal_map = ExtResource( 12 )
 offset = Vector2( 0, -7 )
-vframes = 5
-hframes = 6
+vframes = 4
+hframes = 5
+frame = 11
+
+[node name="water_line" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.313726 )
+material = SubResource( 5 )
+texture = ExtResource( 8 )
+offset = Vector2( 0, -7 )
 
 [node name="fx_fg" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 
 [node name="opti_meds" type="Sprite" parent="fx_fg"]
 modulate = Color( 0.00784314, 1, 0, 1 )
-material = SubResource( 4 )
+material = SubResource( 6 )
 position = Vector2( 0, -15 )
 scale = Vector2( 6, 8 )
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="pain_meds" type="Sprite" parent="fx_fg"]
 modulate = Color( 0.968627, 0, 0.886275, 1 )
-material = SubResource( 5 )
+material = SubResource( 7 )
 position = Vector2( 0, -15 )
 scale = Vector2( 6, 8 )
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="splash" type="Particles2D" parent="fx_fg"]
@@ -1648,28 +1778,31 @@ amount = 16
 one_shot = true
 explosiveness = 1.0
 local_coords = false
-process_material = SubResource( 10 )
+process_material = SubResource( 12 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/idle_e = SubResource( 11 )
-anims/idle_n = SubResource( 12 )
-anims/idle_s = SubResource( 13 )
-anims/idle_w = SubResource( 14 )
-anims/knife_e = SubResource( 15 )
-anims/knife_n = SubResource( 16 )
-anims/knife_s = SubResource( 17 )
-anims/knife_w = SubResource( 18 )
-anims/throw_e = SubResource( 19 )
-anims/throw_n = SubResource( 20 )
-anims/throw_s = SubResource( 21 )
-anims/throw_w = SubResource( 22 )
-anims/walk_e = SubResource( 23 )
-anims/walk_n = SubResource( 24 )
-anims/walk_s = SubResource( 25 )
-anims/walk_w = SubResource( 26 )
+anims/gun_e = SubResource( 13 )
+anims/gun_n = SubResource( 14 )
+anims/gun_s = SubResource( 15 )
+anims/gun_w = SubResource( 16 )
+anims/idle_e = SubResource( 17 )
+anims/idle_n = SubResource( 18 )
+anims/idle_s = SubResource( 19 )
+anims/idle_w = SubResource( 20 )
+anims/knife_e = SubResource( 21 )
+anims/knife_n = SubResource( 22 )
+anims/knife_s = SubResource( 23 )
+anims/knife_w = SubResource( 24 )
+anims/throw_e = SubResource( 25 )
+anims/throw_n = SubResource( 26 )
+anims/throw_s = SubResource( 27 )
+anims/throw_w = SubResource( 28 )
+anims/walk_e = SubResource( 29 )
+anims/walk_n = SubResource( 30 )
+anims/walk_s = SubResource( 31 )
+anims/walk_w = SubResource( 32 )
 
 [node name="audio" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 
 [node name="hit" type="AudioStreamPlayer2D" parent="audio"]
@@ -1703,23 +1836,25 @@ attenuation = 2.0
 bus = "SFX"
 
 [node name="shape" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, -0.5 )
 rotation = 1.5708
-shape = SubResource( 27 )
+shape = SubResource( 33 )
 
 [node name="hitbox" type="Area2D" parent="."]
-editor/display_folded = true
-collision_layer = 3
-collision_mask = 3
+visible = false
+collision_layer = 15
+collision_mask = 15
 script = ExtResource( 17 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 position = Vector2( 0, -3 )
-shape = SubResource( 28 )
+shape = SubResource( 34 )
 
 [node name="hitbox_air" type="Area2D" parent="."]
-editor/display_folded = true
 visible = false
+monitoring = false
+monitorable = false
 collision_layer = 12
 collision_mask = 12
 script = ExtResource( 17 )
@@ -1727,20 +1862,39 @@ air = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_air"]
 position = Vector2( 0, -9 )
-shape = SubResource( 29 )
+shape = SubResource( 35 )
 
 [node name="attackbox_knife" type="Area2D" parent="."]
-editor/display_folded = true
 visible = false
-position = Vector2( -8, -2.5 )
+position = Vector2( 1, -12 )
+rotation = 1.5708
+scale = Vector2( 1, 1.333 )
 monitoring = false
 monitorable = false
-collision_layer = 3
-collision_mask = 3
+collision_layer = 2
+collision_mask = 2050
 script = ExtResource( 18 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attackbox_knife"]
-shape = SubResource( 30 )
+shape = SubResource( 36 )
+
+[node name="attackbox_gun" type="Area2D" parent="."]
+visible = false
+rotation = -1.5708
+monitoring = false
+monitorable = false
+collision_layer = 4
+collision_mask = 4
+script = ExtResource( 18 )
+type = 8
+power = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attackbox_gun"]
+shape = SubResource( 37 )
+
+[node name="ray2d" type="RayCast2D" parent="."]
+visible = false
+collision_mask = 1025
 
 [node name="thrown_item_pos" type="Position2D" parent="."]
 visible = false

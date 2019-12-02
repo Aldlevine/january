@@ -10,7 +10,7 @@ var sw := Vector2(-1, 1)
 var w := Vector2.LEFT
 var nw := Vector2(-1, -1)
 
-var all := [n, ne, e, se, s, sw, e, nw]
+var all := [n, ne, e, se, s, sw, w, nw]
 
 func v2s(v: Vector2) -> String:
   match v:
@@ -22,6 +22,7 @@ func v2s(v: Vector2) -> String:
     sw: return "sw"
     w: return "w"
     nw: return "nw"
+  return ""
 
 func s2v(st: String) -> Vector2:
   match st:
@@ -33,6 +34,7 @@ func s2v(st: String) -> Vector2:
     "sw": return sw
     "w": return w
     "nw": return nw
+  return none
 
 func closest(v: Vector2, dirs := ["n", "ne", "e", "se", "s", "sw", "w", "nw"]) -> Vector2:
   var closest_angle = 2 * PI

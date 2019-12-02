@@ -15,6 +15,9 @@ export(Color) var aggro_color = Color(1, 0.5, 0.5)
 
 export(bool) var electrified = false
 
+onready var shadow = $shadow
+onready var sprite = $bbc_sprite/sprite
+
 func get_speed():
   var result = speed
   if sink > 0 && vertical_pos < sink:
@@ -22,7 +25,7 @@ func get_speed():
   return result
 
 func _ready():
-  $Sprite.material = $Sprite.material.duplicate()
+  sprite.material = sprite.material.duplicate()
   pausetime = MAX_PAUSETIME * max(randf(), 0.5)
 
 func _physics_process(_delta):
@@ -32,7 +35,7 @@ func _physics_process(_delta):
 
 func state_default(delta):
   # modulate = Color(1, 1, 1)
-  $Sprite.material.set_shader_param("modulate", Color(1, 1, 1));
+  sprite.material.set_shader_param("modulate", Color(1, 1, 1));
   if pausetime > 0:
     pausetime -= delta
     if pausetime <= 0:
@@ -74,7 +77,7 @@ func state_attack(delta):
 
 func state_aggro(delta):
   # modulate = aggro_color
-  $Sprite.material.set_shader_param("modulate", aggro_color);
+  sprite.material.set_shader_param("modulate", aggro_color);
   gravity_loop(delta)
   movement_loop()
   damage_loop()
@@ -131,11 +134,5 @@ func handle_death(attack, hitbox):
 
 func handle_vertical_offset(offset):
   .handle_vertical_offset(offset)
-  $Sprite.position.y = -offset
-  # $fx_bg.position.y = -offset
-  # $fx_fg.position.y = -offset
-  
-  # $shadow.scale = Vector2(1, 1) * (1 - max(offset, 0) / 32)
-  # $water_line.self_modulate.a = lerp(0.0, 1.0, min(-offset / 6.0, 1.0))
-  # $shadow.self_modulate.a = lerp(1.0, 0.0, max(min(-offset / 6.0, 1.0), 0.0))
-  $Sprite.material.set_shader_param("sink", -offset if offset < 0 else 0)
+  sprite.position.y = -offset
+  sprite.material.set_shader_param("sink", -offset if offset < 0 else 0)

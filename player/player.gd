@@ -17,6 +17,9 @@ var num_plasma_grenades := 3
 
 var thrown_item = null
 
+onready var shadow = $shadow
+onready var sprite = $bbc_sprite/sprite
+
 # onready var water_depth := get_tree().get_root().find_node("water_depth", true, false)
 # var sink := 0.0 setget set_sink
 
@@ -40,41 +43,17 @@ func get_speed():
     result *= min(1 / sqrt(sink), 1.0)
   return result
 
-# func set_vertical_pos(pos):
-#   .set_vertical_pos(pos)
-#   handle_vertical_offset(pos - sink)
-
-# func set_sink(amt):
-#   var prev = sink
-#   sink = amt
-#   var pos = vertical_pos - amt
-#   if vertical_pos > 0:
-#     self.vertical_pos += sink - prev
-#   else:
-#     handle_vertical_offset(pos)
-
 ### INITIALIZERS
 
 func _ready():
+  sprite.material = sprite.material.duplicate()
   $fx_bg.visible = true
   $fx_fg.visible = true
-
 ### LOOPS
 
 func _physics_process(_delta):
   if state != "knife":
     $attackbox_knife.set_deferred("monitorable", false)
-
-# func gravity_loop(delta):
-#   .gravity_loop(delta)
-#   self.sink = water_depth.get_depth_at_point(global_position)
-  # if sink > 0 && vertical_pos < 2 && vertical_velocity < 0:
-  #   $fx_fg/splash.emitting = true
-  # elif vertical_pos >= sink:
-  #   # if $fx_fg/splash.emitting:
-  #     $fx_fg/splash.restart()
-  #     $fx_fg/splash.emitting = false
-
 
 func input_loop():
   var west = Input.is_action_pressed("player_left")
@@ -83,8 +62,6 @@ func input_loop():
   var south = Input.is_action_pressed("player_down")
   inputdir.x = -int(west) + int(east)
   inputdir.y = -int(north) + int(south)
-  # movedir.x = -int(west) + int(east)
-  # movedir.y = -int(north) + int(south)
 
 func facing_loop():
   set_facedir(inputdir)
@@ -92,17 +69,15 @@ func facing_loop():
 func move_controls_loop():
   if vertical_pos == 0:
     movedir = inputdir
-  # elif inputdir.length_squared() > 0:
-  #   facedir = 
   if Input.is_action_just_pressed("player_jump") && vertical_pos == 0:
-    vertical_velocity = 1.5
+    jump()
 
 func attack_controls_loop():
   if Input.is_action_just_pressed("player_action_1"):
     knife()
   if Input.is_action_just_pressed("player_action_2"):
     rock()
-    # plasma_grenade()
+    # gun()
 
 func pickup_loop():
   if $hitbox.monitoring:
@@ -173,6 +148,18 @@ func state_knife(delta):
   if !anim.is_playing():
     state = "default"
 
+func state_gun(delta):
+  if vertical_pos == 0:
+    movedir = Vector2()
+  status_loop(delta)
+  gravity_loop(delta)
+  movement_loop()
+  pickup_loop()
+  damage_loop()
+  switch_anim("gun")
+  if !anim.is_playing():
+    state = "default"
+
 func state_throw(delta):
   if vertical_pos == 0:
     movedir = Vector2()
@@ -189,10 +176,16 @@ func state_throw(delta):
     thrown_item.global_position = $thrown_item_pos.global_position
     thrown_item.global_position.y = $thrown_item_pos.global_position.y - (vertical_pos - sink)
 
-### ATTACKS
+### ACTIONS
+
+func jump():
+  vertical_velocity = 1.5
 
 func knife():
   state = "knife"
+
+func gun():
+  state = "gun"
 
 func rock():
   if num_rocks > 0:
@@ -244,14 +237,14 @@ func emit_show_thrown_item():
 
 func handle_vertical_offset(offset):
   .handle_vertical_offset(offset)
-  $Sprite.position.y = -offset
-  $fx_bg.position.y = -offset
-  $fx_fg.position.y = -offset
+  sprite.position.y = -floor(offset)
+  $fx_bg.position.y = -floor(offset)
+  $fx_fg.position.y = -floor(offset)
   
-  $shadow.scale = Vector2(1, 1) * (1 - max(offset, 0) / 32)
-  $water_line.self_modulate.a = lerp(0.0, 1.0, min(-offset / 6.0, 1.0))
-  $shadow.self_modulate.a = lerp(1.0, 0.0, max(min(-offset / 6.0, 1.0), 0.0))
-  $Sprite.material.set_shader_param("sink", -offset if offset < 0 else 0)
+  shadow.scale = Vector2(1, 1) * (1 - max(offset, 0) / 32)
+  # $water_line.self_modulate.a = lerp(0.0, 1.0, min(-offset / 6.0, 1.0))
+  # $shadow.self_modulate.a = lerp(1.0, 0.0, max(min(-offset / 6.0, 1.0), 0.0))
+  sprite.material.set_shader_param("sink", -floor(offset) if offset < 0 else 0.0)
 
 func attack_landed(_attack, _hitbox):
   if health > 0:

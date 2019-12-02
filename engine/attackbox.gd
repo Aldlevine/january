@@ -22,8 +22,24 @@ onready var entity = get_parent()
 onready var base_layer = collision_layer
 onready var base_mask = collision_mask
 
+onready var ray2d = entity.get_node("ray2d") if entity && entity.has_node("ray2d") else null
+
 func _ready():
   entity.attackboxes.append(self)
+  if ray2d:
+    ray2d.add_exception(entity)
+
+func check_attack(hitbox):
+  if ray2d && hitbox.entity:
+    ray2d.add_exception(hitbox.entity)
+    ray2d.collision_mask = collision_mask
+    ray2d.cast_to = hitbox.entity.global_position - entity.global_position
+    ray2d.force_raycast_update()
+    var other = ray2d.get_collider()
+    ray2d.remove_exception(hitbox.entity)
+    if other != null:
+      return false
+  return true
 
 func handle_hit(hitbox):
   attack_landed(hitbox)
