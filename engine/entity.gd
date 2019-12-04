@@ -56,7 +56,7 @@ func get_speed():
 func set_vertical_pos(pos):
   vertical_pos = pos
   if is_inside_tree():
-  handle_vertical_offset(pos - sink)
+    handle_vertical_offset(pos - sink)
 
 func set_sink(amt):
   var prev = sink
@@ -79,11 +79,6 @@ func set_facedir(dir):
 
 ### INITIALIZERS
 
-# func _ready():
-  # if health > max_health:
-  #   health = max_health
-  # states["default"] = funcref(self, "state_default")
-
 ### LOOPS
 
 func _physics_process(delta):
@@ -99,9 +94,6 @@ func _physics_process(delta):
 
   if has_state(state):
     callv(str("state_", state), [delta])
-  # if states.has(state) && states[state] != null:
-  #   states[state].call_func(delta)
-
 
 func correct_data_loop():
   if health > max_health: health = max_health
@@ -121,14 +113,6 @@ func movement_loop(round_position = true):
 
 func facing_loop():
   set_facedir(movedir)
-  # if movedir.length_squared() > 0:
-  #   match movedir:
-  #     Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN: facedir = movedir
-  #     _:
-  #       if movedir.x != facedir.x && movedir.y != facedir.y:
-  #         match facedir:
-  #           Vector2.LEFT, Vector2.RIGHT: facedir = Vector2(0, movedir.y)
-  #           Vector2.UP, Vector2.DOWN: facedir = Vector2(movedir.x, 0)
 
 func damage_loop():
   if safetime > 0:
@@ -153,7 +137,7 @@ func gravity_loop(delta):
     vertical_pos = 0.0
 
   if water_depth:
-  self.sink = water_depth.get_depth_at_point(global_position)
+    self.sink = water_depth.get_depth_at_point(global_position)
 
 ### CALLABLES
 
@@ -199,13 +183,10 @@ func handle_attack(attack, hitbox = null):
     if hitboxes.size() == 0:
       return
     hitbox = hitboxes[0]
-
   if !check_attack(attack, hitbox):
     return
-
   if attack.has_method("check_attack") && !attack.check_attack(hitbox):
     return
-
   health -= compute_damage(attack, hitbox)
   attack.handle_hit(hitbox)
   attack_landed(attack, hitbox)
