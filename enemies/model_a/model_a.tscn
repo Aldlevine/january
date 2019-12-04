@@ -456,12 +456,10 @@ attenuation = 2.0
 bus = "SFX"
 
 [node name="shape" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, -1 )
 shape = SubResource( 7 )
 
 [node name="attackbox" type="Area2D" parent="."]
-visible = false
 position = Vector2( 0, 2 )
 collision_layer = 255
 collision_mask = 261375

@@ -67,19 +67,12 @@ func state_pickup(_delta):
 func recoil():
   movedir = -movedir
   speed *= 0.25
-  # max_speed *= 0.25
 
 func handle_vertical_offset(offset):
   .handle_vertical_offset(offset)
   sprite.position.y = -offset
-  # $attackbox.position.y = -offset
   shadow.self_modulate.a = lerp(1.0, 0.0, max(min(-offset / 6.0, 1.0), 0.0))
   sprite.material.set_shader_param("sink", -offset if offset < 0 else 0)
-
-  if vertical_pos > 0:
-    $attackbox.air = true
-  else:
-    $attackbox.air = false
 
 func _handle_pickup(entity):
   if entity.is_player():

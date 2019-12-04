@@ -38,8 +38,8 @@ tracks/0/keys = {
 "values": [ 0.0, 72.0, 144.0, 216.0, 288.0, 360.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 2, 2 )
+[sub_resource type="CircleShape2D" id=7]
+radius = 4.0
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 2, 2 )
@@ -78,7 +78,7 @@ monitorable = false
 script = ExtResource( 6 )
 
 [node name="pickup_shape" type="CollisionShape2D" parent="pickup"]
-shape = SubResource( 5 )
+shape = SubResource( 7 )
 
 [node name="attackbox" type="Area2D" parent="."]
 script = ExtResource( 7 )

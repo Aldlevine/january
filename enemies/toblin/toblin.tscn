@@ -393,13 +393,13 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=15]
-extents = Vector2( 3, 0.5 )
+extents = Vector2( 2, 0.5 )
 
 [sub_resource type="RectangleShape2D" id=16]
-extents = Vector2( 3, 2 )
+extents = Vector2( 2.1, 2.1 )
 
 [sub_resource type="RectangleShape2D" id=17]
-extents = Vector2( 4, 2 )
+extents = Vector2( 3, 3 )
 
 [node name="toblin" type="KinematicBody2D"]
 collision_layer = 3
@@ -415,7 +415,7 @@ drops = [ ExtResource( 2 ) ]
 modulate = Color( 0.133333, 0.133333, 0.180392, 1 )
 material = SubResource( 1 )
 texture = ExtResource( 3 )
-offset = Vector2( 0, -5 )
+offset = Vector2( 0, -4 )
 
 [node name="bbc_sprite" type="BackBufferCopy" parent="."]
 copy_mode = 2
@@ -424,7 +424,7 @@ copy_mode = 2
 material = SubResource( 2 )
 texture = ExtResource( 5 )
 normal_map = ExtResource( 6 )
-offset = Vector2( 0, -6 )
+offset = Vector2( 0, -5 )
 vframes = 5
 hframes = 6
 frame = 3
@@ -456,7 +456,7 @@ bus = "SFX"
 
 [node name="shape" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( 0, -0.5 )
+position = Vector2( 0, 0.5 )
 shape = SubResource( 15 )
 
 [node name="attackbox" type="Area2D" parent="."]
@@ -468,11 +468,10 @@ type = 1
 power = 0.5
 
 [node name="attackbox_shape" type="CollisionShape2D" parent="attackbox"]
-position = Vector2( 0, -2 )
+position = Vector2( 0, -1 )
 shape = SubResource( 16 )
 
 [node name="hitbox" type="Area2D" parent="."]
-visible = false
 collision_layer = 7
 collision_mask = 7
 script = ExtResource( 9 )

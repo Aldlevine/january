@@ -3,8 +3,8 @@
 [ext_resource path="res://pickups/pain_meds/pain_meds.gd" type="Script" id=1]
 [ext_resource path="res://pickups/pain_meds/pain_meds.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 0.5 )
+[sub_resource type="CircleShape2D" id=1]
+radius = 4.0
 
 [node name="pain_meds" type="Area2D"]
 script = ExtResource( 1 )

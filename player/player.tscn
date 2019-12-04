@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/player_shadow.png" type="Texture" id=2]
@@ -86,113 +86,121 @@ scale_curve = SubResource( 11 )
 [sub_resource type="Animation" id=13]
 resource_name = "gun_e"
 length = 0.25
-tracks/0/type = "value"
-tracks/0/path = NodePath("attackbox_gun:rotation_degrees")
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0.1 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ -90.0 ]
+"values": [ {
+"args": [ Vector2( 1, 0 ) ],
+"method": "emit_throw_item"
+} ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("attackbox_gun:monitorable")
+tracks/1/path = NodePath("thrown_item_pos:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false, true, false ]
+"values": [ Vector2( 5, 0 ) ]
 }
 
 [sub_resource type="Animation" id=14]
 resource_name = "gun_n"
 length = 0.25
-tracks/0/type = "value"
-tracks/0/path = NodePath("attackbox_gun:rotation_degrees")
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0.1 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 180.0 ]
+"values": [ {
+"args": [ Vector2( 0, -1 ) ],
+"method": "emit_throw_item"
+} ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("attackbox_gun:monitorable")
+tracks/1/path = NodePath("thrown_item_pos:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false, true, false ]
+"values": [ Vector2( 0, -4 ) ]
 }
 
 [sub_resource type="Animation" id=15]
 resource_name = "gun_s"
 length = 0.25
-tracks/0/type = "value"
-tracks/0/path = NodePath("attackbox_gun:rotation_degrees")
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0.1 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
+"values": [ {
+"args": [ Vector2( 0, 1 ) ],
+"method": "emit_throw_item"
+} ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("attackbox_gun:monitorable")
+tracks/1/path = NodePath("thrown_item_pos:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false, true, false ]
+"values": [ Vector2( 0, 3 ) ]
 }
 
 [sub_resource type="Animation" id=16]
 resource_name = "gun_w"
 length = 0.25
-tracks/0/type = "value"
-tracks/0/path = NodePath("attackbox_gun:rotation_degrees")
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0.1 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 90.0 ]
+"values": [ {
+"args": [ Vector2( -1, 0 ) ],
+"method": "emit_throw_item"
+} ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("attackbox_gun:monitorable")
+tracks/1/path = NodePath("thrown_item_pos:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false, true, false ]
+"values": [ Vector2( -5, -1 ) ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -1685,19 +1693,16 @@ tracks/6/keys = {
 
 [sub_resource type="CapsuleShape2D" id=33]
 radius = 1.0
-height = 6.0
+height = 4.0
 
 [sub_resource type="RectangleShape2D" id=34]
-extents = Vector2( 3, 3 )
+extents = Vector2( 4, 1.5 )
 
 [sub_resource type="RectangleShape2D" id=35]
 extents = Vector2( 3, 3 )
 
 [sub_resource type="RectangleShape2D" id=36]
 extents = Vector2( 6, 7.5 )
-
-[sub_resource type="RayShape2D" id=37]
-length = 180.0
 
 [node name="player" type="KinematicBody2D"]
 position = Vector2( 0, 1 )
@@ -1737,12 +1742,12 @@ copy_mode = 2
 
 [node name="sprite" type="Sprite" parent="bbc_sprite"]
 material = SubResource( 4 )
-texture = ExtResource( 10 )
-normal_map = ExtResource( 12 )
+texture = ExtResource( 13 )
+normal_map = ExtResource( 7 )
 offset = Vector2( 0, -7 )
 vframes = 4
-hframes = 5
-frame = 11
+hframes = 6
+frame = 6
 
 [node name="water_line" type="Sprite" parent="."]
 visible = false
@@ -1836,19 +1841,17 @@ attenuation = 2.0
 bus = "SFX"
 
 [node name="shape" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, -0.5 )
 rotation = 1.5708
 shape = SubResource( 33 )
 
 [node name="hitbox" type="Area2D" parent="."]
-visible = false
 collision_layer = 15
 collision_mask = 15
 script = ExtResource( 17 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
-position = Vector2( 0, -3 )
+position = Vector2( 0, -0.51 )
 shape = SubResource( 34 )
 
 [node name="hitbox_air" type="Area2D" parent="."]
@@ -1865,7 +1868,6 @@ position = Vector2( 0, -9 )
 shape = SubResource( 35 )
 
 [node name="attackbox_knife" type="Area2D" parent="."]
-visible = false
 position = Vector2( 1, -12 )
 rotation = 1.5708
 scale = Vector2( 1, 1.333 )
@@ -1878,24 +1880,8 @@ script = ExtResource( 18 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attackbox_knife"]
 shape = SubResource( 36 )
 
-[node name="attackbox_gun" type="Area2D" parent="."]
-visible = false
-rotation = -1.5708
-monitoring = false
-monitorable = false
-collision_layer = 4
-collision_mask = 4
-script = ExtResource( 18 )
-type = 8
-power = 2.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="attackbox_gun"]
-shape = SubResource( 37 )
-
 [node name="ray2d" type="RayCast2D" parent="."]
-visible = false
 collision_mask = 1025
 
 [node name="thrown_item_pos" type="Position2D" parent="."]
-visible = false
-position = Vector2( -6, -7 )
+position = Vector2( 0, 3 )

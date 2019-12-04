@@ -20,9 +20,6 @@ var thrown_item = null
 onready var shadow = $shadow
 onready var sprite = $bbc_sprite/sprite
 
-# onready var water_depth := get_tree().get_root().find_node("water_depth", true, false)
-# var sink := 0.0 setget set_sink
-
 ### ACCESSORS
 
 func get_strength():
@@ -186,6 +183,14 @@ func knife():
 
 func gun():
   state = "gun"
+  var shoot_dir = yield(self, "throw_item")
+  var bullet = instance_scene(preload("res://throwables/bullet/bullet.tscn"), $thrown_item_pos.global_position)
+  bullet.team = Team.Ally
+  bullet.thrown_by = self
+  bullet.global_position = $thrown_item_pos.global_position
+  bullet.sink = sink
+  bullet.vertical_pos = 8.0 + vertical_pos
+  bullet.movedir = shoot_dir
 
 func rock():
   if num_rocks > 0:
@@ -204,15 +209,13 @@ func throw(item):
   thrown_item.team = Team.Ally
   thrown_item.thrown_by = self
   thrown_item.global_position.y = $thrown_item_pos.global_position.y - (vertical_pos - sink)
-  # thrown_item.vertical_pos = 2.0
   if facedir != directions.n:
     thrown_item.z_index = 1
   var throw_dir = yield(self, "throw_item")
   thrown_item.z_index = 0
   thrown_item.global_position = $thrown_item_pos.global_position
-  # thrown_item.vertical_pos = 8.0 + vertical_pos - sink
-  thrown_item.vertical_pos = 8.0 + vertical_pos
   thrown_item.sink = sink
+  thrown_item.vertical_pos = 8.0 + vertical_pos
   thrown_item.vertical_velocity = 0.5
   thrown_item.global_position.y += 5.0
   thrown_item.movedir = throw_dir
