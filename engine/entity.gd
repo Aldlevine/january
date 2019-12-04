@@ -55,6 +55,7 @@ func get_speed():
 
 func set_vertical_pos(pos):
   vertical_pos = pos
+  if is_inside_tree():
   handle_vertical_offset(pos - sink)
 
 func set_sink(amt):
@@ -63,7 +64,7 @@ func set_sink(amt):
   var pos = vertical_pos - amt
   if vertical_pos > 0:
     self.vertical_pos += sink - prev
-  else:
+  elif is_inside_tree():
     handle_vertical_offset(pos)
 
 func set_facedir(dir):
@@ -151,6 +152,7 @@ func gravity_loop(delta):
     vertical_velocity = 0.0
     vertical_pos = 0.0
 
+  if water_depth:
   self.sink = water_depth.get_depth_at_point(global_position)
 
 ### CALLABLES
